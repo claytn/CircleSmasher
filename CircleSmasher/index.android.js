@@ -10,11 +10,18 @@ import {
   StyleSheet,
 } from 'react-native';
 import GameMenu from './appFiles/GameMenu.js';
+import Router from 'react-native-simple-router';
+const FIRST_ROUTE =  {
+    component: GameMenu,
+    hideNavigationBar: true,
+    noStatusBar: true,
+    trans: true,
+}
 
 class CircleSmasher extends Component {
   render() {
     return (
-      <GameMenu />
+      <Router firstRoute={FIRST_ROUTE} handleBackAndroid={true} />
     );
   }
 }

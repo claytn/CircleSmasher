@@ -7,9 +7,13 @@
   },
   "dependencies": {
     "react": "15.2.1",
-    "react-native": "0.31.0"
+    "react-native": "0.31.0",
+    "react-native-simple-router": "^0.11.1",
+    "react-native-vector-icons": "^2.0.3"
   },
   "rnpm": {
-          "assets": ["./appFiles/GROBOLD.ttf"]
-    }
+    "assets": [
+      "./appFiles/GROBOLD.ttf"
+    ]
+  }
 }
