@@ -81,7 +81,7 @@ class GameMenu extends Component {
 
       <Text style={styles.titleText}>Circle</Text>
         <View style={styles.menuItemsWrapper}>
-          <TouchableHighlight style={styles.menuItem} underlayColor='#E0E0E0' onPress={this.blankFunc} activeOpacity={0.7}>
+          <TouchableHighlight style={styles.menuItem} underlayColor='transparent' onPress={this.blankFunc} activeOpacity={0.7}>
             <Octicon name="graph" size={45} color='#7c7979' />
           </TouchableHighlight>
 
@@ -89,7 +89,7 @@ class GameMenu extends Component {
           <Icon name="play-arrow" size={120} color='#7c7979'/>
           </TouchableHighlight>
 
-          <TouchableHighlight style={styles.menuItem} underlayColor='#E0E0E0' onPress={this.blankFunc} activeOpacity={0.7} >
+          <TouchableHighlight style={styles.menuItem} underlayColor='transparent' onPress={this.blankFunc} activeOpacity={0.7} >
             <Octicon name="gear" size={45} color='#7c7979'/>
           </TouchableHighlight>
         </View>

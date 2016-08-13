@@ -23,9 +23,9 @@ class GameBoard extends Component{
     super();
     this.state= {
       score: 0,
-      circleLeft: 100,
-      circleTop: 100,
-      circleColor: 'blue'
+      circleLeft: (Math.random() * (width - CIRC_SIZE)),
+      circleTop: (Math.random() * (height - (CIRC_SIZE*3))),
+      circleColor: this.getColor()
     }
   }
 
@@ -100,8 +100,10 @@ class GameScreen extends Component{
 
 
   componentDidMount(){
+    currentScore = 0;
     setTimeout(this.countDown.bind(this), 1000);
   }
+
 
 
   render(){
