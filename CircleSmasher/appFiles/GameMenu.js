@@ -14,19 +14,21 @@ import GameScreen from './GameScreen.js';
 
 let height = Dimensions.get('window').height;
 let width = Dimensions.get('window').width;
-let colorDatabase  = ['#e24e42','#328cc1','#eb6e80','#94618e','#f2d388','#93c178','#f19f4d','#88d317','#d48cf8','#155765', '#1fb58f','#99ced4','#cda34f'];
+//let colorDatabase  = ['#e24e42','#328cc1','#eb6e80','#94618e','#f2d388','#93c178','#f19f4d','#88d317','#d48cf8','#155765', '#1fb58f','#99ced4','#cda34f'];
+let colorDatabase = ['#BCCF02'/*lime*/,'#9B539C'/*purple*/,'#DE8642'/*orange*/,'#73C5E1'/*bright blue*/,
+                     '#5BB12F'/*green*/,'#EE4B3E'/*red*/,'#E9BC1B'/*dull yellow*/,'#EB65A0'/*pink*/,
+                    ];
 const CIRC_SIZE = height/8;
-
+var count = 0;
 class GameMenu extends Component {
 
   constructor(){
     super();
     this.state = {
       animationVal: new Animated.Value(0),
-      left: 80,
-      top: 100,
+      left: (Math.random() * (width - CIRC_SIZE)),
+      top: (Math.random() * (height - (CIRC_SIZE*3))),
       color: this.getColor(),
-
     }
 
   }
@@ -39,6 +41,7 @@ class GameMenu extends Component {
   }
 
   renderNewCircle(){
+    count++;
     this.setState({
       left: (Math.random() * (width - CIRC_SIZE)),
       top: (Math.random() * (height - CIRC_SIZE)),
@@ -48,11 +51,12 @@ class GameMenu extends Component {
   }
 
   getColor(){
-    return colorDatabase[Math.floor(Math.random() * colorDatabase.length)];
+    return colorDatabase[count%colorDatabase.length];
   }
 
 
   componentDidMount(){
+    count = 0;
     this.animateCircle(this.renderNewCircle.bind(this));
   }
 

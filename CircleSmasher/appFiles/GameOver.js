@@ -5,44 +5,71 @@ import {
   TouchableHighlight,
   View,
 } from 'react-native';
+import GameMenu from './GameMenu.js';
 import Dimensions from 'Dimensions';
 import realm from './realm.js';
+import Icon from 'react-native-vector-icons/Ionicons';
 
 class GameOver extends Component{
 
-  getLowest(){
-    var lowest = realm.objects('HighScores')[0];
-    for(var i = 1; i < realm.objects('HighScores').length; i++){
-      if(realm.objects('HighScores')[i].score < lowest.score){
-        lowest = realm.objects('HighScores')[i];
-      }
-    }
-    return lowest;
-  }
 
   replaceLowestScore(){
-    var low = this.getLowest();
     realm.write(()=>{
-       low.score = this.props.score;
+       realm.objects('HighScores')[0].score = this.props.score;
     });
+  }
 
-
-
+  restartGame(){
+    this.props.toRoute({
+      component: GameMenu,
+      hideNavigationBar: true,
+      noStatusBar: true,
+      trans: true,
+    });
   }
 
   render(){
-    console.log(this.getLowest().score);
-    if(this.props.score > this.getLowest().score){
+    //console.log(this.getLowest().score);
+    if(this.props.score > realm.objects('HighScores')[0].score){
       this.replaceLowestScore();
       return(
-        <Text>Trophy for {this.props.score}</Text>
+        <View style={styles.container}>
+          <Icon name='md-trophy' size={160} />
+          <Text style={styles.score}>{this.props.score}</Text>
+          <Text>Your Score is on the Leaderboard!</Text>
+          <TouchableHighlight style={styles.reset} onPress={this.restartGame.bind(this)}>
+            <Text>Tap to Restart</Text>
+          </TouchableHighlight>
+        </View>
       );
     }
     return(
-      <Text> You fuckin suck. {this.props.score} </Text>
+      <View style={styles.container}>
+
+      <Text style={styles.score}>{this.props.score}</Text>
+      <TouchableHighlight style={styles.reset} onPress={this.restartGame.bind(this)}>
+        <Text>Tap to Restart</Text>
+      </TouchableHighlight>
+
+      </View>
     );
   }
 }
+
+const styles = StyleSheet.create({
+  container:{
+    flex:1,
+    alignItems:'center',
+    justifyContent: 'center'
+  },
+  score:{
+    fontSize: 50,
+
+  },
+  reset:{
+    marginTop: 40,
+  }
+})
 
 
 export default GameOver;

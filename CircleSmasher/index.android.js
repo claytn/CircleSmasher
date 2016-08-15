@@ -21,7 +21,7 @@ const FIRST_ROUTE =  {
 class CircleSmasher extends Component {
   render() {
     return (
-      <Router firstRoute={FIRST_ROUTE} handleBackAndroid={true} />
+      <Router firstRoute={FIRST_ROUTE}  />
     );
   }
 }

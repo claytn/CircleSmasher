@@ -9,9 +9,7 @@ var HighScores = {
 
 let realm = new Realm({schema:[HighScores], schemaVersion: 1});
 realm.write(()=>{
-  //realm.delete(realm.objects('HighScores'));
-  realm.create('HighScores',{score: 0});
-  realm.create('HighScores',{score: 0});
+  realm.delete(realm.objects('HighScores'));
   realm.create('HighScores',{score: 0});
 });
 

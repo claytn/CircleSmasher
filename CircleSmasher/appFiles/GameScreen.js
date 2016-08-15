@@ -15,7 +15,10 @@ let height = Dimensions.get('window').height;
 let width = Dimensions.get('window').width;
 const CIRC_SIZE = height/8;
 
-let colorDatabase  = ['#e24e42','#328cc1','#eb6e80','#94618e','#f2d388','#93c178','#f19f4d','#88d317','#d48cf8','#155765', '#1fb58f','#99ced4','#cda34f'];
+//let oldColorDatabase  = ['#e24e42','#328cc1','#eb6e80','#94618e','#f2d388','#93c178','#f19f4d','#88d317','#d48cf8','#155765', '#1fb58f','#99ced4','#cda34f'];
+let colorDatabase = ['#BCCF02'/*lime*/,'#9B539C'/*purple*/,'#DE8642'/*orange*/,'#73C5E1'/*bright blue*/,
+                     '#5BB12F'/*green*/,'#EE4B3E'/*red*/,'#E9BC1B'/*dull yellow*/,'#EB65A0'/*pink*/,
+                    ];
 let currentScore = 0;
 
 class GameBoard extends Component{
@@ -48,7 +51,7 @@ class GameBoard extends Component{
     return(
       <View style={styles.boardContainer}>
       <Text style={styles.onScreenScore}>{this.state.score}</Text>
-      <TouchableHighlight style={[styles.circle, {left: this.state.circleLeft, top: this.state.circleTop, backgroundColor: this.state.circleColor}]} onPress={this.renderNewCircle.bind(this)}>
+      <TouchableHighlight underlayColor={this.state.circleColor} onPress={(this.props.time == 0)? ()=>{} :this.renderNewCircle.bind(this)} style={[styles.circle, {left: this.state.circleLeft, top: this.state.circleTop, backgroundColor: this.state.circleColor}]} >
         <View></View>
       </TouchableHighlight>
       </View>
@@ -56,14 +59,14 @@ class GameBoard extends Component{
     );
   }
 }
-
+//
 
 class GameScreen extends Component{
 
   constructor(){
     super();
     this.state= {
-      gameHasStarted: false,
+      gameHasStarted:false,
       startingCountDown: 3,
       gameOver: false,
       gameClock: 30,
@@ -74,10 +77,19 @@ class GameScreen extends Component{
     setTimeout(()=>{
       if(this.state.gameClock > 0){
       this.setState({gameClock: this.state.gameClock - 1});
-      setTimeout(()=>{this.runGameClock.bind(this)}, 1000);
+      this.runGameClock();
       }
       else{
         this.setState({gameOver: true});
+        this.props.toRoute({
+          component: GameOver,
+          hideNavigationBar: true,
+          noStatusBar: true,
+          trans: true,
+          passProps:{
+            score: currentScore,
+          }
+        });
       }
     }, 1000);
 
@@ -89,23 +101,23 @@ class GameScreen extends Component{
       setTimeout(()=>{
         if(this.state.startingCountDown > 1){
         this.setState({startingCountDown: this.state.startingCountDown -1});
-        setTimeout(this.countDown.bind(this), 1000);
+        this.countDown();
         }
         else{
+
           this.setState({
               gameHasStarted: true,
-          })
+          });
+
         }
-        });
+      },1000);
   }
 
 
   componentDidMount(){
     currentScore = 0;
-    setTimeout(this.countDown.bind(this), 1000);
+    this.countDown();
   }
-
-
 
   render(){
     if(!this.state.gameHasStarted){
@@ -115,20 +127,18 @@ class GameScreen extends Component{
         </View>
         );
     }
-    else if(this.state.gameOver){
-      return(
-        <GameOver score={currentScore}/>
-      );
-    }
+
 
     else{
+      if(this.state.gameClock == 30){
       this.runGameClock();
+      }
       return(
       <View style={styles.gameSessionContainer}>
       <View style={styles.timer}>
         <Text style={styles.gameClock}>Time: {this.state.gameClock}</Text>
       </View>
-      <GameBoard />
+      <GameBoard time={this.state.gameClock}/>
       </View>
       );
     }
