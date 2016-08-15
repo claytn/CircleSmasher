@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
 import {
-  AppRegistry,
+
   StyleSheet,
   Text,
   TouchableHighlight,
   View,
 } from 'react-native';
 import Dimensions from 'Dimensions';
+import GameOver from './GameOver.js';
 //import GameBoard from './GameBoard.js';
 
 
@@ -30,7 +31,7 @@ class GameBoard extends Component{
   }
 
   getColor(){
-    return colorDatabase[Math.floor(Math.random() * colorDatabase.length)];
+    return colorDatabase[currentScore%colorDatabase.length];
   }
 
   renderNewCircle(){
@@ -116,9 +117,7 @@ class GameScreen extends Component{
     }
     else if(this.state.gameOver){
       return(
-      <View style={styles.container}>
-        <Text> Game Over. You scored {currentScore} </Text>
-      </View>
+        <GameOver score={currentScore}/>
       );
     }
 
