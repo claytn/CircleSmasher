@@ -11,6 +11,8 @@ import Dimensions from 'Dimensions';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import Octicon from 'react-native-vector-icons/Octicons';
 import GameScreen from './GameScreen.js';
+import realm from './realm.js';
+import Sound from 'react-native-sound';
 
 let height = Dimensions.get('window').height;
 let width = Dimensions.get('window').width;
@@ -29,25 +31,34 @@ class GameMenu extends Component {
       left: (Math.random() * (width - CIRC_SIZE)),
       top: (Math.random() * (height - (CIRC_SIZE*3))),
       color: this.getColor(),
+      sound: realm.objects('Sound')[0].sound,
+      play: false,
     }
 
   }
 
   animateCircle(callback){
+
     Animated.sequence([
         Animated.timing(this.state.animationVal, {duration: 400, delay: 500, toValue: 1 }),
         Animated.timing(this.state.animationVal, {duration: 400, delay: 1000, toValue: 0 }),
     ]).start(callback);
+
   }
 
   renderNewCircle(){
+
+    if(realm.objects('Sound')[0].sound === true && count === 0){
+      this.props.data.setVolume(0.5).setNumberOfLoops(-1).play();
+    }
+
     count++;
     this.setState({
       left: (Math.random() * (width - CIRC_SIZE)),
       top: (Math.random() * (height - CIRC_SIZE)),
       color: this.getColor(),
-    })
-    this.animateCircle(this.renderNewCircle.bind(this));
+    });
+
   }
 
   getColor(){
@@ -60,43 +71,77 @@ class GameMenu extends Component {
     this.animateCircle(this.renderNewCircle.bind(this));
   }
 
-  playGame(){
+  componentDidUpdate(){
+    if(!this.state.play){
+      this.animateCircle(this.renderNewCircle.bind(this));
+    }
+  }
 
-      this.props.toRoute({
+  stopCircles(){
+    this.setState({
+      play: true,
+    });
+
+    this.playGame();
+  }
+
+
+  playGame(){
+      this.props.replaceRoute({
         component: GameScreen,
         hideNavigationBar: true,
         noStatusBar: true,
         trans: true,
         sceneConfig: Navigator.SceneConfigs.FadeAndroid,
+        data: this.props.data,
       });
-
-
   }
 
   blankFunc(){
 
   }
 
+  setVolume(){
+    //checking current state of sound and changing
+    if(!this.state.sound){
+      this.props.data.setVolume(0.5).setNumberOfLoops(-1).play();
+    }
+    else if(this.state.sound){
+      this.props.data.stop();
+    }
+
+    this.setState({
+      sound:!this.state.sound,
+    });
+
+    realm.write(()=>{
+      //console.log(realm.objects('Sound')[0].sound);
+      realm.objects('Sound')[0].sound = !realm.objects('Sound')[0].sound;
+      //console.log(realm.objects('Sound')[0].sound);
+    });
+  }
+
   render() {
+
     return (
       <View style={styles.container}>
       <View style={styles.homeWrapper}>
 
-      <Text style={styles.titleText}>Circle</Text>
+      <Text style={styles.titleText}>CIRCLE</Text>
         <View style={styles.menuItemsWrapper}>
           <TouchableHighlight style={styles.menuItem} underlayColor='transparent' onPress={this.blankFunc} activeOpacity={0.7}>
-            <Octicon name="graph" size={45} color='#7c7979' />
+            <Octicon name="gear" size={45} color='#7c7979'/>
           </TouchableHighlight>
 
-          <TouchableHighlight style={styles.play} underlayColor='transparent' onPress={this.playGame.bind(this)} activeOpacity={0.7}>
+          <TouchableHighlight style={styles.play} underlayColor='transparent' onPress={this.stopCircles.bind(this)} activeOpacity={0.7}>
           <Icon name="play-arrow" size={120} color='#7c7979'/>
           </TouchableHighlight>
 
-          <TouchableHighlight style={styles.menuItem} underlayColor='transparent' onPress={this.blankFunc} activeOpacity={0.7} >
-            <Octicon name="gear" size={45} color='#7c7979'/>
+          <TouchableHighlight style={styles.menuItem} underlayColor='transparent' onPress={this.setVolume.bind(this)} activeOpacity={0.7} >
+            <Icon name={(this.state.sound) ? 'volume-up' : 'volume-off'} size={45} color='#7c7979' />
           </TouchableHighlight>
         </View>
-        <Text style={styles.titleText}>Smasher</Text>
+        <Text style={styles.titleText}>SMASHER</Text>
 
 
         </View>

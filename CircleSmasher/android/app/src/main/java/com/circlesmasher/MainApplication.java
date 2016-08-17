@@ -8,8 +8,8 @@ import com.facebook.react.ReactInstanceManager;
 import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
 import com.facebook.react.shell.MainReactPackage;
-import io.realm.react.RealmReactPackage; // ADD THIS
-
+import io.realm.react.RealmReactPackage; // ADD THIS FOR REALM
+import com.zmxv.RNSound.RNSoundPackage; //ADD THIS FOR SOUND
 
 
 import java.util.Arrays;
@@ -27,7 +27,8 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
-           new RealmReactPackage() // AND THIS
+           new RealmReactPackage(), // AND THIS
+           new RNSoundPackage() //AND THIS
       );
     }
   };

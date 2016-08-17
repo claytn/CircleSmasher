@@ -5,10 +5,11 @@ import {
   Text,
   TouchableHighlight,
   View,
+  Navigator
 } from 'react-native';
 import Dimensions from 'Dimensions';
 import GameOver from './GameOver.js';
-//import GameBoard from './GameBoard.js';
+
 
 
 let height = Dimensions.get('window').height;
@@ -68,12 +69,13 @@ class GameScreen extends Component{
     this.state= {
       gameHasStarted:false,
       startingCountDown: 3,
-      gameOver: false,
+      gameOver: true,
       gameClock: 30,
     }
   }
 
   runGameClock(){
+    var self = this;
     setTimeout(()=>{
       if(this.state.gameClock > 0){
       this.setState({gameClock: this.state.gameClock - 1});
@@ -81,13 +83,15 @@ class GameScreen extends Component{
       }
       else{
         this.setState({gameOver: true});
-        this.props.toRoute({
+        this.props.replaceRoute({
           component: GameOver,
           hideNavigationBar: true,
           noStatusBar: true,
           trans: true,
+          sceneConfig: Navigator.SceneConfigs.FadeAndroid,
           passProps:{
             score: currentScore,
+            noise: self.props.data,
           }
         });
       }

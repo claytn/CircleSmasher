@@ -11,6 +11,8 @@ import {
 } from 'react-native';
 import GameMenu from './appFiles/GameMenu.js';
 import Router from 'react-native-simple-router';
+import realm from './appFiles/realm.js';
+import Sound from 'react-native-sound';
 const FIRST_ROUTE =  {
     component: GameMenu,
     hideNavigationBar: true,
@@ -19,9 +21,33 @@ const FIRST_ROUTE =  {
 }
 
 class CircleSmasher extends Component {
+  constructor(){
+    super();
+    this.boop = null;
+  }
+
+  componentWillMount(){
+
+    this.boop = new Sound('bgmusic.mp3', Sound.MAIN_BUNDLE, (error) => {
+      if (error) {
+        console.log('failed to load the sound', error);
+      } else { // loaded successfully
+        console.log('duration in seconds: ' + this.boop.getDuration() +
+            'number of channels: ' + this.boop.getNumberOfChannels());
+      }
+    });
+
+  }
+
   render() {
+
     return (
-      <Router firstRoute={FIRST_ROUTE}  />
+      <Router firstRoute={{
+        component: GameMenu,
+        hideNavigationBar: true,
+        noStatusBar: true,
+        trans: true,
+        data: this.boop}}  />
     );
   }
 }
