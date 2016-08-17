@@ -13,6 +13,7 @@ import Octicon from 'react-native-vector-icons/Octicons';
 import GameScreen from './GameScreen.js';
 import realm from './realm.js';
 import Sound from 'react-native-sound';
+import SoundComp from './SoundComp';
 
 let height = Dimensions.get('window').height;
 let width = Dimensions.get('window').width;
@@ -31,7 +32,7 @@ class GameMenu extends Component {
       left: (Math.random() * (width - CIRC_SIZE)),
       top: (Math.random() * (height - (CIRC_SIZE*3))),
       color: this.getColor(),
-      sound: realm.objects('Sound')[0].sound,
+
       play: false,
     }
 
@@ -101,25 +102,7 @@ class GameMenu extends Component {
 
   }
 
-  setVolume(){
-    //checking current state of sound and changing
-    if(!this.state.sound){
-      this.props.data.setVolume(0.5).setNumberOfLoops(-1).play();
-    }
-    else if(this.state.sound){
-      this.props.data.stop();
-    }
 
-    this.setState({
-      sound:!this.state.sound,
-    });
-
-    realm.write(()=>{
-      //console.log(realm.objects('Sound')[0].sound);
-      realm.objects('Sound')[0].sound = !realm.objects('Sound')[0].sound;
-      //console.log(realm.objects('Sound')[0].sound);
-    });
-  }
 
   render() {
 
@@ -137,9 +120,8 @@ class GameMenu extends Component {
           <Icon name="play-arrow" size={120} color='#7c7979'/>
           </TouchableHighlight>
 
-          <TouchableHighlight style={styles.menuItem} underlayColor='transparent' onPress={this.setVolume.bind(this)} activeOpacity={0.7} >
-            <Icon name={(this.state.sound) ? 'volume-up' : 'volume-off'} size={45} color='#7c7979' />
-          </TouchableHighlight>
+          <SoundComp data={this.props.data}/>
+
         </View>
         <Text style={styles.titleText}>SMASHER</Text>
 
