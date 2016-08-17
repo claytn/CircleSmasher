@@ -17,7 +17,10 @@ let width = Dimensions.get('window').width;
 const CIRC_SIZE = height/8;
 var count = 0;
 let colorDatabase = ['#BCCF02'/*lime*/,'#9B539C'/*purple*/,'#DE8642'/*orange*/,'#73C5E1'/*bright blue*/,
-                     '#5BB12F'/*green*/,'#EE4B3E'/*red*/,'#E9BC1B'/*dull yellow*/,'#EB65A0'/*pink*/,
+                     '#C0B283' /*pale gold*/,'#5BB12F'/*green*/,'#EE4B3E'/*red*/,'#E9BC1B'/*dull yellow*/,'#EB65A0'/*pink*/,
+                     '#FC4A1A'/*vermilion*/, '#4ABDAC'/*fresh blue*/,  '#373737'/*charcoal*/,
+                     '#EEAA7B'/*pale orange*/,'#A239CA'/*fuscia*/, '#4717F6'/*jewel blue*/, '#6D7993'/*lavender*/,
+                     '#3CC47C'/*electric green*/, '#B82601'/*ember red*/,'#812772'/*posy pink*/,'#062F4F'/*ink blue*/,
                     ];
 class GameOver extends Component{
 
@@ -58,6 +61,19 @@ class GameOver extends Component{
   componentDidMount(){
     count = 0;
     this.animateCircle(this.renderNewCircle.bind(this));
+    if(this.props.score >= 65 && realm.objects('Unlocked')[0].sports === false){
+      realm.write(()=>{
+        realm.objects('Unlocked')[0].sports = true;
+      });
+    }
+    realm.write(()=>{
+      realm.objects('GamesPlayed')[0].count = realm.objects('GamesPlayed')[0].count + 1;
+      if(realm.objects('GamesPlayed')[0].count === 50){
+            realm.objects('Unlocked')[0].emojis = true;
+      }
+    });
+
+
   }
 
   componentDidUpdate(){

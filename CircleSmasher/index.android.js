@@ -56,4 +56,6 @@ const styles = StyleSheet.create({
 
 });
 
+export default CircleSmasher;
+
 AppRegistry.registerComponent('CircleSmasher', () => CircleSmasher);

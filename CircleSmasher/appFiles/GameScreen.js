@@ -9,7 +9,8 @@ import {
 } from 'react-native';
 import Dimensions from 'Dimensions';
 import GameOver from './GameOver.js';
-
+import realm from './realm.js';
+import Emoji from 'react-native-emoji';
 
 
 let height = Dimensions.get('window').height;
@@ -18,8 +19,19 @@ const CIRC_SIZE = height/8;
 
 //let oldColorDatabase  = ['#e24e42','#328cc1','#eb6e80','#94618e','#f2d388','#93c178','#f19f4d','#88d317','#d48cf8','#155765', '#1fb58f','#99ced4','#cda34f'];
 let colorDatabase = ['#BCCF02'/*lime*/,'#9B539C'/*purple*/,'#DE8642'/*orange*/,'#73C5E1'/*bright blue*/,
-                     '#5BB12F'/*green*/,'#EE4B3E'/*red*/,'#E9BC1B'/*dull yellow*/,'#EB65A0'/*pink*/,
+                     '#C0B283' /*pale gold*/,'#5BB12F'/*green*/,'#EE4B3E'/*red*/,'#E9BC1B'/*dull yellow*/,'#EB65A0'/*pink*/,
+                     '#FC4A1A'/*vermilion*/, '#4ABDAC'/*fresh blue*/,  '#373737'/*charcoal*/,
+                     '#EEAA7B'/*pale orange*/,'#A239CA'/*fuscia*/, '#4717F6'/*jewel blue*/, '#6D7993'/*lavender*/,
+                     '#3CC47C'/*electric green*/, '#B82601'/*ember red*/,'#812772'/*posy pink*/,'#062F4F'/*ink blue*/,
                     ];
+
+let emojiDatabase = ['smiling_imp','coffee','relaxed','grinning','hankey','heart_eyes','muscle','sunglasses','see_no_evil',
+                     'couple','ghost','100','fire','sweat_smile','laughing','sweat','stuck_out_tongue_winking_eye','angry',
+                     'rage','cry','triumph','grimacing','mask','smile_cat','pouting_cat','face_with_head_bandage','nerd_face'
+                    ];
+
+let sportsDatabase = ['football','trophy','tennis','soccer','basketball','golfer','volleyball','bowling','baseball'];
+
 let currentScore = 0;
 
 class GameBoard extends Component{
@@ -35,7 +47,15 @@ class GameBoard extends Component{
   }
 
   getColor(){
+    if(realm.objects('SelectedPack')[0].pack === 'circles'){
     return colorDatabase[currentScore%colorDatabase.length];
+    }
+    else if(realm.objects('SelectedPack')[0].pack === 'emojis'){
+      return emojiDatabase[currentScore%emojiDatabase.length];
+    }
+    else if(realm.objects('SelectedPack')[0].pack === 'sports'){
+      return sportsDatabase[currentScore%sportsDatabase.length];
+    }
   }
 
   renderNewCircle(){
@@ -49,15 +69,38 @@ class GameBoard extends Component{
   }
 
   render(){
-    return(
-      <View style={styles.boardContainer}>
-      <Text style={styles.onScreenScore}>{this.state.score}</Text>
-      <TouchableHighlight underlayColor={this.state.circleColor} onPress={(this.props.time == 0)? ()=>{} :this.renderNewCircle.bind(this)} style={[styles.circle, {left: this.state.circleLeft, top: this.state.circleTop, backgroundColor: this.state.circleColor}]} >
-        <View></View>
-      </TouchableHighlight>
-      </View>
+    if(realm.objects('SelectedPack')[0].pack === 'circles'){
+      return(
+        <View style={styles.boardContainer}>
+        <Text style={styles.onScreenScore}>{this.state.score}</Text>
+        <TouchableHighlight underlayColor={this.state.circleColor} onPress={(this.props.time == 0)? ()=>{} :this.renderNewCircle.bind(this)} style={[styles.circle, {left: this.state.circleLeft, top: this.state.circleTop, backgroundColor: this.state.circleColor}]} >
+          <View></View>
+        </TouchableHighlight>
+        </View>
 
-    );
+      );
+    }
+    else if(realm.objects('SelectedPack')[0].pack === 'emojis'){
+      return(
+        <View style={styles.boardContainer}>
+        <Text style={styles.onScreenScore}>{this.state.score}</Text>
+        <TouchableHighlight underlayColor='transparent' onPress={(this.props.time == 0)? ()=>{} :this.renderNewCircle.bind(this)} style={[styles.emojiWrapper,{left: this.state.circleLeft, top: this.state.circleTop}]} >
+          <Text style={styles.emoji}><Emoji name={this.state.circleColor} /></Text>
+        </TouchableHighlight>
+        </View>
+      )
+    }
+    else if(realm.objects('SelectedPack')[0].pack === 'sports'){
+      return(
+        <View style={styles.boardContainer}>
+        <Text style={styles.onScreenScore}>{this.state.score}</Text>
+        <TouchableHighlight underlayColor='transparent' onPress={(this.props.time == 0)? ()=>{} :this.renderNewCircle.bind(this)} style={[styles.emojiWrapper,{left: this.state.circleLeft, top: this.state.circleTop}]} >
+          <Text style={styles.emoji}><Emoji name={this.state.circleColor} /></Text>
+        </TouchableHighlight>
+        </View>
+      );
+    }
+
   }
 }
 //
@@ -167,6 +210,13 @@ const styles = StyleSheet.create({
     height: CIRC_SIZE,
     borderRadius: CIRC_SIZE,
     elevation: 2,
+  },
+  emojiWrapper:{
+    position: 'absolute',
+  },
+  emoji:{
+    color: 'white',
+    fontSize: CIRC_SIZE,
   },
 
 
