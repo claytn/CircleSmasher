@@ -18,7 +18,7 @@ import Unlockables from './Unlockables.js';
 
 let height = Dimensions.get('window').height;
 let width = Dimensions.get('window').width;
-//let colorDatabase  = ['#e24e42','#328cc1','#eb6e80','#94618e','#f2d388','#93c178','#f19f4d','#88d317','#d48cf8','#155765', '#1fb58f','#99ced4','#cda34f'];
+let titleColors = [['#28abe3','#1fda9a'],['#00a03e','#ffa200'],['#f0c654','#de5842'],['#94fffc','#fac8bf'],['#f38f00','#71569b'],['#d75c37','#6a8d9d']];
 let colorDatabase = ['#BCCF02'/*lime*/,'#9B539C'/*purple*/,'#DE8642'/*orange*/,'#73C5E1'/*bright blue*/,
                      '#C0B283' /*pale gold*/,'#5BB12F'/*green*/,'#EE4B3E'/*red*/,'#E9BC1B'/*dull yellow*/,'#EB65A0'/*pink*/,
                      '#FC4A1A'/*vermilion*/, '#4ABDAC'/*fresh blue*/,  '#373737'/*charcoal*/,
@@ -36,7 +36,7 @@ class GameMenu extends Component {
       left: (Math.random() * (width - CIRC_SIZE)),
       top: (Math.random() * (height - (CIRC_SIZE*3))),
       color: this.getColor(),
-
+      titleColor: titleColors[Math.floor(Math.random()*titleColors.length)],
       play: false,
     }
 
@@ -62,6 +62,7 @@ class GameMenu extends Component {
       left: (Math.random() * (width - CIRC_SIZE)),
       top: (Math.random() * (height - CIRC_SIZE)),
       color: this.getColor(),
+      titleColor: titleColors[Math.floor(Math.random()*titleColors.length)]
     });
 
   }
@@ -124,7 +125,7 @@ class GameMenu extends Component {
       <View style={styles.container}>
       <View style={styles.homeWrapper}>
 
-      <Text style={[styles.titleText,{color: colorDatabase[Math.floor(Math.random() * colorDatabase.length)]}]}>CIRCLE</Text>
+      <Text style={[styles.titleText,{color:this.state.titleColor[0]}]}>CIRCLE</Text>
         <View style={styles.menuItemsWrapper}>
           <TouchableHighlight style={styles.menuItem} underlayColor='transparent' onPress={this.changeTheme.bind(this)} activeOpacity={0.7}>
             <Icon name="developer-board" size={45} color='#7c7979'/>
@@ -137,7 +138,7 @@ class GameMenu extends Component {
           <SoundComp data={this.props.data}/>
 
         </View>
-        <Text style={[styles.titleText,{color: colorDatabase[Math.floor(Math.random() * colorDatabase.length)]}]}>SMASHER</Text>
+        <Text style={[styles.titleText,{color: this.state.titleColor[1]}]}>SMASHER</Text>
 
 
         </View>

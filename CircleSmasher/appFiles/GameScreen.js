@@ -25,12 +25,17 @@ let colorDatabase = ['#BCCF02'/*lime*/,'#9B539C'/*purple*/,'#DE8642'/*orange*/,'
                      '#3CC47C'/*electric green*/, '#B82601'/*ember red*/,'#812772'/*posy pink*/,'#062F4F'/*ink blue*/,
                     ];
 
-let emojiDatabase = ['smiling_imp','coffee','relaxed','grinning','hankey','heart_eyes','muscle','sunglasses','see_no_evil',
-                     'couple','ghost','100','fire','sweat_smile','laughing','sweat','stuck_out_tongue_winking_eye','angry',
-                     'rage','cry','triumph','grimacing','mask','smile_cat','pouting_cat','face_with_head_bandage','nerd_face'
+let emojiDatabase = ['smiling_imp','coffee','relaxed','gem','grinning','hankey','heart_eyes','muscle','sunglasses','see_no_evil',
+                     'couple','skull','ghost','100','fire','sweat_smile','laughing','sweat','angry',
+                     'cry','triumph','grimacing','mask','smile_cat','face_with_head_bandage','nerd_face',
+                     'zipper_mouth_face','robot_face','the_horns','+1','crown','rage','eyeglasses','necktie','imp','stuck_out_tongue_winking_eye',
+                     'pouting_cat',
                     ];
 
-let sportsDatabase = ['football','trophy','tennis','soccer','basketball','golfer','volleyball','bowling','baseball'];
+let sportsDatabase = ['football','trophy','skier','tennis','soccer','basketball','golfer','volleyball','bowling','baseball'
+                      ,'ice_hockey_stick_and_puck','table_tennis_paddle_and_ball','racing_car','golf','weight_lifter',
+                      'swimmer','rugby_football','sports_medal','surfer','snowboarder','runner','horse_racing',
+                    ];
 
 let currentScore = 0;
 

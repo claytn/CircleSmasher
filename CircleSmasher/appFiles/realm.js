@@ -39,11 +39,11 @@ var GamesPlayed = {
 
 let realm = new Realm({schema:[HighScores,Sound, SelectedPack, Unlocked, GamesPlayed], schemaVersion: 3});
 realm.write(()=>{
-  realm.delete(realm.objects('GamesPlayed'));
+  /*realm.delete(realm.objects('GamesPlayed'));
   realm.delete(realm.objects('HighScores'));
   realm.delete(realm.objects('Sound'));
   realm.delete(realm.objects('SelectedPack'));
-  realm.delete(realm.objects('Unlocked'));
+  realm.delete(realm.objects('Unlocked'));*/
   realm.create('GamesPlayed', {count: 0});
   realm.create('Unlocked', {circles: true, emojis: false, sports: false});
   realm.create('Sound',{sound: false});
