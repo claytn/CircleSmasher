@@ -68,7 +68,7 @@ class GameOver extends Component{
     }
     realm.write(()=>{
       realm.objects('GamesPlayed')[0].count = realm.objects('GamesPlayed')[0].count + 1;
-      if(realm.objects('GamesPlayed')[0].count === 50){
+      if(realm.objects('GamesPlayed')[0].count === 25){
             realm.objects('Unlocked')[0].emojis = true;
       }
     });
@@ -108,7 +108,7 @@ class GameOver extends Component{
 
       return(
 
-          <TouchableHighlight underlayColor='#E0E0E0' style={styles.container} onPress={this.restartGame.bind(this)}>
+          <TouchableHighlight underlayColor='white' style={styles.container} onPress={this.restartGame.bind(this)}>
           <View style={styles.container}>
           <Icon name='md-trophy' size={160} color='#dab622' style={{elevation: 2}}/>
           <Text style={[styles.score,{color: colorDatabase[this.props.score % colorDatabase.length]}]}>{this.props.score}</Text>
@@ -123,7 +123,7 @@ class GameOver extends Component{
       );
     }else{
     return(
-      <TouchableHighlight underlayColor='#E0E0E0' style={styles.container} onPress={this.restartGame.bind(this)}>
+      <TouchableHighlight underlayColor='white' style={styles.container} onPress={this.restartGame.bind(this)}>
       <View style={styles.container}>
       <Text style={[styles.score, {color: colorDatabase[this.props.score % colorDatabase.length]}]}>{this.props.score}</Text>
       <Text style={styles.bestScore}>BEST {realm.objects('HighScores')[0].score}</Text>
@@ -144,7 +144,7 @@ const styles = StyleSheet.create({
     flex:1,
     alignItems:'center',
     justifyContent: 'center',
-    backgroundColor: '#E0E0E0',
+    backgroundColor: 'white',
     alignSelf:'stretch',
   },
   score:{

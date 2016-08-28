@@ -47,7 +47,8 @@ class CircleSmasher extends Component {
         hideNavigationBar: true,
         noStatusBar: true,
         trans: true,
-        data: this.boop}}  />
+        data: this.boop,
+      }} />
     );
   }
 }

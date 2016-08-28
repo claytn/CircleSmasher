@@ -18,7 +18,7 @@ import Unlockables from './Unlockables.js';
 
 let height = Dimensions.get('window').height;
 let width = Dimensions.get('window').width;
-let titleColors = [['#28abe3','#1fda9a'],['#00a03e','#ffa200'],['#f0c654','#de5842'],['#94fffc','#fac8bf'],['#f38f00','#71569b'],['#d75c37','#6a8d9d']];
+let titleColors = [['#28abe3','#1fda9a'],['#00a03e','#ffa200'],['#f0c654','#de5842'],['#d8b954','#4a4a4a'],['#f38f00','#71569b'],['#d75c37','#6a8d9d']];
 let colorDatabase = ['#BCCF02'/*lime*/,'#9B539C'/*purple*/,'#DE8642'/*orange*/,'#73C5E1'/*bright blue*/,
                      '#C0B283' /*pale gold*/,'#5BB12F'/*green*/,'#EE4B3E'/*red*/,'#E9BC1B'/*dull yellow*/,'#EB65A0'/*pink*/,
                      '#FC4A1A'/*vermilion*/, '#4ABDAC'/*fresh blue*/,  '#373737'/*charcoal*/,
@@ -154,7 +154,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'space-around',
-    backgroundColor: '#E0E0E0',
+    backgroundColor: 'white',
   },
 
   circle:{
@@ -212,7 +212,7 @@ homeWrapper:{
     borderColor: '#7c7979',
     borderRadius: width / 2,
     borderWidth: 5,
-    backgroundColor: '#E0E0E0',
+    backgroundColor: 'white',
     elevation: 4,
 
   }

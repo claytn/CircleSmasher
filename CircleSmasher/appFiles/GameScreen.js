@@ -202,7 +202,7 @@ const styles = StyleSheet.create({
   //GameBoard
   boardContainer:{
     flex: 11,
-    backgroundColor: '#E0E0E0',
+    backgroundColor: 'white',
     justifyContent: 'flex-end',
     alignItems: 'center',
   },
@@ -228,13 +228,13 @@ const styles = StyleSheet.create({
   //GameScreen
   container:{
     flex: 1,
-    backgroundColor: '#E0E0E0',
+    backgroundColor: 'white',
     justifyContent: 'center',
     alignItems: 'center',
   },
   gameSessionContainer:{
     flex: 1,
-    backgroundColor: '#E0E0E0',
+    backgroundColor: 'white',
 
   },
 
